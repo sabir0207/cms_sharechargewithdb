@@ -1,0 +1,188 @@
+/* Import common styles */
+@import url('login.css');
+@import url('admin.css');
+
+/* Division-specific styles can be added here */
+/* For now, we're reusing most of the admin dashboard styles */
+ /* Excel Export Button Styles */
+    #exportComplaintsBtn {
+        display: flex;
+        align-items: center;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        padding: 6px 12px;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 0.9em;
+        transition: background-color 0.3s;
+        margin-left: 10px;
+    }
+    
+    #exportComplaintsBtn:hover {
+        background-color: #45a049;
+    }
+    
+    #exportComplaintsBtn i {
+        margin-right: 5px;
+    }
+/* Override specific styles as needed */
+.sidebar-item.active {
+    background-color: var(--primary-light);
+    color: var(--primary-dark);
+    border-left: 4px solid var(--primary-color);
+}
+
+.sidebar-item.active i {
+    color: var(--primary-color);
+}
+
+/* Add additional styles for unique division features */
+.vendor-info-card {
+    background-color: white;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.vendor-info-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--gray-200);
+}
+
+.vendor-info-title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--gray-800);
+}
+
+.vendor-details {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1rem;
+}
+
+.vendor-detail {
+    margin-bottom: 0.5rem;
+}
+
+.vendor-detail-label {
+    font-size: 0.75rem;
+    color: var(--gray-500);
+    margin-bottom: 0.25rem;
+}
+
+.vendor-detail-value {
+    font-weight: 500;
+    color: var(--gray-700);
+}
+
+.assign-complaint-card {
+    background-color: white;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.assign-complaint-header {
+    margin-bottom: 1rem;
+}
+
+.assign-complaint-title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--gray-800);
+    margin-bottom: 0.5rem;
+}
+
+.assign-complaint-subtitle {
+    color: var(--gray-600);
+    font-size: 0.875rem;
+}
+
+.vendor-selection {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.vendor-selection-card {
+    flex: 1;
+    min-width: 200px;
+    background-color: var(--gray-50);
+    border: 1px solid var(--gray-200);
+    border-radius: var(--radius-md);
+    padding: 1rem;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.vendor-selection-card:hover {
+    border-color: var(--accent-color);
+    background-color: var(--accent-light);
+}
+
+.vendor-selection-card.selected {
+    border-color: var(--primary-color);
+    background-color: var(--primary-light);
+}
+
+.vendor-card-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.vendor-card-icon {
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    background-color: var(--gray-200);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 0.75rem;
+}
+
+.vendor-card-icon i {
+    color: var(--gray-600);
+}
+
+.vendor-card-title {
+    font-weight: 500;
+    color: var(--gray-800);
+}
+
+.vendor-card-details {
+    font-size: 0.875rem;
+    color: var(--gray-600);
+}
+
+.vendor-card-metrics {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 0.75rem;
+    padding-top: 0.75rem;
+    border-top: 1px solid var(--gray-200);
+    font-size: 0.75rem;
+}
+
+.vendor-metric {
+    text-align: center;
+}
+
+.vendor-metric-value {
+    font-weight: 600;
+    color: var(--gray-800);
+}
+
+.vendor-metric-label {
+    color: var(--gray-500);
+}

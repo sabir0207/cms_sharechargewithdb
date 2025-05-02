@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EV Charging Complaint Management System</title>
+    <link rel="stylesheet" href="css/login.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+</head>
+<body>
+    <div id="loginPage" class="page">
+        <div class="flex-container">
+            <!-- Logo and Header -->
+            <div class="text-center mb-8">
+                <div class="logo-container">
+                    <i class="fas fa-bolt logo-icon"></i>
+                </div>
+                <h1 class="heading-primary">EV Charging</h1>
+                <h2 class="heading-secondary">Complaint Management System</h2>
+            </div>
+
+            <!-- Login Card -->
+            <div class="card">
+                <!-- Tab Navigation -->
+                <div class="tab-container">
+                    <button class="tab-btn active" id="loginTab">Login</button>
+                    <button class="tab-btn" id="trackingTab">Track Complaint</button>
+                </div>
+
+                <!-- Login Form -->
+                <div id="loginForm" class="form-container">
+                    <h3 class="form-heading">Welcome Back</h3>
+                    <form id="userLoginForm">
+                        <div class="form-group">
+                            <label for="userType">Login As</label>
+                            <select id="userType" name="userType" required>
+                                <option value="admin">Admin</option>
+                                <option value="division">Division</option>
+                                <option value="vendor">Vendor</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="username">Username or Email</label>
+                            <input type="text" id="username" name="username" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <input type="password" id="password" name="password" required>
+                            <div class="forgot-password">
+                                <a href="#" id="forgotPasswordLink">Forgot Password?</a>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block">Sign In</button>
+                    </form>
+
+                    <div class="text-center mt-4">
+                        <p class="text-gray">Consumer? <a href="consumer.html" class="link" id="fileComplaintLink">File a complaint</a></p>
+                    </div>
+                </div>
+
+                <!-- Tracking Form -->
+                <div id="trackingForm" class="form-container hidden">
+                    <h3 class="form-heading">Track Your Complaint</h3>
+                    <form id="trackComplaintForm">
+                        <div class="form-group">
+                            <label for="trackingId">Phone Number</label>
+                            <input type="tel" id="trackingId" name="trackingId" 
+                                placeholder="Enter your phone number" pattern="[0-9]{10,15}" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block">Track Complaints</button>
+                    </form>
+
+                    <div class="text-center mt-4">
+                        <p class="text-gray">Need to file a complaint? <a href="consumer.html" class="link" id="fileComplaintLink2">Click here</a></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-text">
+                © 2025 EV Charging Complaint Management System. All rights reserved.
+            </div>
+        </div>
+
+        <!-- Tracking Results Section (initially hidden) -->
+        <div id="trackingResultSection" class="tracking-result-section hidden">
+            <div class="container">
+                <div class="card">
+                    <h2>Your Complaints</h2>
+                    <div id="trackingResult" class="tracking-result">
+                        <!-- Tracking result will be populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification Container -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- Complaint Timeline Modal -->
+    <div id="complaintTimelineModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Complaint Timeline</h2>
+                <button class="modal-close" id="closeTimelineModal">×</button>
+            </div>
+            <div class="modal-body">
+                <div id="timelineContainer" class="tracking-timeline">
+                    <!-- Timeline content will be populated by JavaScript -->
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" id="closeTimelineBtn">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="js/login.js?v=<?php echo time(); ?>"></script>
+</body>
+</html>

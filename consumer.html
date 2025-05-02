@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submit Complaint - EV Charging System</title>
+    <link rel="stylesheet" href="css/consumer.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- QR Code Scanner Library -->
+    <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js"></script>
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <style>
+        /* Additional styles for form validation */
+        .form-group.required label:after {
+            content: "*";
+            color: #f44336;
+            margin-left: 3px;
+        }
+        
+        .sub-issue-hint {
+            color: #f44336;
+            font-size: 0.8em;
+            margin-top: 4px;
+            display: none;
+        }
+        
+        .sub-issue-hint.show {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div id="consumerPage" class="page">
+        <div class="consumer-nav">
+            <div class="container">
+                <div class="nav-content">
+                    <div class="nav-logo">
+                        <i class="fas fa-bolt logo-icon-sm"></i>
+                        <h1 class="nav-title">EV Charging</h1>
+                    </div>
+                    <div class="nav-actions">
+                        <a href="index.html" class="nav-link" id="backToLoginLink">Admin Login</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="consumer-hero">
+            <div class="container">
+                <h1>Report an Issue with EV Charging Station</h1>
+                <p>We are committed to providing reliable charging services. If you are experiencing issues with our charging stations, please let us know.</p>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="complaint-container">
+                <!-- Two-column layout -->
+                <div class="complaint-layout">
+                    <!-- Left column: Complaint form -->
+                    <div class="complaint-form-column">
+                        <div class="card complaint-card-container">
+                            <div class="complaint-tabs">
+                                <button class="complaint-tab active" id="manualEntryTab">Manual Entry</button>
+                                <button class="complaint-tab" id="scanQrTab">Scan QR Code</button>
+                            </div>
+                            
+                            <div class="complaint-content">
+                                <!-- QR Scanner Section - Initially Hidden -->
+                                <div id="qrScannerSection" class="complaint-section hidden">
+                                    <div class="qr-scanner-container">
+                                        <div class="qr-scanner-viewport">
+                                            <video id="qrVideo" playsinline></video>
+                                            <div class="qr-scanner-overlay">
+                                                <div class="qr-scanner-frame"></div>
+                                                <div class="qr-scanner-line"></div>
+                                            </div>
+                                        </div>
+                                        <div class="qr-status">
+                                            <p>Point your camera at the QR code on the charging station</p>
+                                        </div>
+                                        <div class="qr-controls">
+                                            <button class="btn btn-danger" id="cancelScanBtn">
+                                                <i class="fas fa-times"></i> Cancel Scan
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Complaint Form Section -->
+                                <div id="complaintFormSection" class="complaint-section">
+                                    <h2>File a Complaint</h2>
+                                    <form id="consumerComplaintForm">
+                                        <div class="form-group required">
+                                            <label for="stationId">Charging Station ID</label>
+                                            <input type="text" id="stationId" name="stationId" placeholder="Enter the ID from the charging station" required>
+                                            <div id="chargerInfoDisplay" class="charger-info-display hidden">
+                                                <div class="charger-info-header">
+                                                    <span class="charger-title">Charger Location:</span>
+                                                    <span id="chargerLocationInfo" class="info-value">-</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="form-row">
+                                            <div class="form-group half required">
+                                                <label for="consumerName">Your Name</label>
+                                                <input type="text" id="consumerName" name="consumerName" required>
+                                            </div>
+                                            <div class="form-group half required">
+                                                <label for="consumerPhone">Phone Number</label>
+                                                <input type="tel" id="consumerPhone" name="consumerPhone" 
+                                                    placeholder="Enter 10-15 digit number" pattern="[0-9]{10,15}" required>
+                                                <p class="help-text">Format: 10-15 digits without spaces or special characters</p>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="form-group">
+                                            <label for="consumerEmail">Email Address (Optional)</label>
+                                            <input type="email" id="consumerEmail" name="consumerEmail">
+                                        </div>
+                                        
+                                        <div class="form-group required">
+                                            <label for="complaintType">Type of Issue</label>
+                                            <select id="complaintType" name="complaintType" required>
+                                                <option value="">Select Issue Type</option>
+                                                <option value="charger_not_working">Charger Not Working</option>
+                                                <option value="physical_damage">Physical Damage</option>
+                                                <option value="mobile_app_issue">Mobile App Issue</option>
+                                                <option value="payment_problem">Payment Problem</option>
+                                                <option value="billing_issue">Billing Issue</option>
+                                                <option value="connector_problem">Connector Problem</option>
+                                                <option value="feedback">Feedback</option>
+                                                <option value="other">Other</option>
+                                            </select>
+                                        </div>
+                                        
+                                        <div id="subIssueContainer" class="form-group required hidden">
+                                            <label for="subIssueType">Specific Issue</label>
+                                            <select id="subIssueType" name="subIssueType" required>
+                                                <option value="">Select a Specific Issue</option>
+                                                <!-- Sub-issue options will be loaded dynamically -->
+                                            </select>
+                                            <p class="sub-issue-hint" id="subIssueHint">Please select a specific issue</p>
+                                        </div>
+                                        
+                                        <div class="form-group required">
+                                            <label for="complaintDescription">Describe the Issue</label>
+                                            <textarea id="complaintDescription" name="complaintDescription" rows="4" required></textarea>
+                                        </div>
+                                        
+                                        <div class="form-group">
+                                            <label for="imageUpload">Upload Image (Optional)</label>
+                                            <input type="file" id="imageUpload" name="imageUpload" accept="image/*">
+                                            <p class="help-text">Upload an image of the issue to help us diagnose the problem faster.</p>
+                                        </div>
+                                        
+                                        <button type="submit" class="btn btn-primary btn-block">Submit Complaint</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Right column: Help section -->
+                    <div class="complaint-help-column">
+                        <div class="card help-card">
+                            <div class="help-header">
+                                <h2><i class="fas fa-question-circle"></i> How to File a Complaint</h2>
+                            </div>
+                            <div class="help-content">
+                                <div class="help-step">
+                                    <div class="step-number">1</div>
+                                    <div class="step-content">
+                                        <h3>Find Your Charger ID</h3>
+                                        <p>Locate the QR code or Charger ID (CPID) on the EV charging station. It usually looks like "EVC-XXXX".</p>
+                                        <div class="step-image">
+                                            <img src="https://via.placeholder.com/200x120" alt="Charger ID location">
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="help-step">
+                                    <div class="step-number">2</div>
+                                    <div class="step-content">
+                                        <h3>Enter Charger Information</h3>
+                                        <p>Either scan the QR code using our scanner or manually type the Charger ID in the form.</p>
+                                        <div class="step-options">
+                                            <div class="step-option">
+                                                <i class="fas fa-qrcode"></i>
+                                                <span>Scan QR Code</span>
+                                            </div>
+                                            <div class="step-divider">OR</div>
+                                            <div class="step-option">
+                                                <i class="fas fa-keyboard"></i>
+                                                <span>Enter Charger ID</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="help-step">
+                                    <div class="step-number">3</div>
+                                    <div class="step-content">
+                                        <h3>Select Issue Type and Specific Issue</h3>
+                                        <p>Choose the main category of your issue and then select the specific problem you're experiencing.</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="help-step">
+                                    <div class="step-number">4</div>
+                                    <div class="step-content">
+                                        <h3>Describe the Issue</h3>
+                                        <p>Provide details about the problem you're experiencing to help us resolve it faster.</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="help-step">
+                                    <div class="step-number">5</div>
+                                    <div class="step-content">
+                                        <h3>Submit and Track</h3>
+                                        <p>Submit your complaint and save the tracking ID. You can use this ID or your phone number to check the status later.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <footer class="consumer-footer">
+            <div class="container">
+                <div class="footer-content">
+                    <div class="footer-logo">
+                        <i class="fas fa-bolt logo-icon-sm"></i>
+                        <span>EV Charging</span>
+                    </div>
+                    <div class="footer-links">
+                        <a href="#">About Us</a>
+                        <a href="#">Contact</a>
+                        <a href="#">Privacy Policy</a>
+                        <a href="#">Terms of Service</a>
+                    </div>
+                    <div class="footer-social">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+                <div class="footer-copyright">
+                    © 2025 EV Charging Complaint Management System. All rights reserved.
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Complaint Confirmation Modal -->
+    <div id="complaintConfirmationModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Complaint Submitted Successfully</h2>
+                <button class="modal-close" id="closeConfirmationModal">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="confirmation-message">
+                    <i class="fas fa-check-circle confirmation-icon"></i>
+                    <p>Thank you for reporting the issue. Your complaint has been registered.</p>
+                    <div class="tracking-info">
+                        <p>Your Tracking ID: <span id="generatedTrackingId" class="highlight-text">#CP-20250408-123</span></p>
+                        <p>Please save this ID or use your phone number to check the status of your complaint later.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="closeAndTrack">Track My Complaint</button>
+                <button class="btn btn-primary" id="closeConfirmation">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification Container -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- JavaScript -->
+    <script src="js/consumer.js"></script>
+</body>
+</html>

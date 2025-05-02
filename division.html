@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Division Dashboard - EV Charging CMS</title>
+    <link rel="stylesheet" href="css/division.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+</head>
+<body>
+    <div id="divisionDashboardPage" class="page">
+        <!-- Top Navigation -->
+        <header class="top-nav">
+            <div class="container">
+                <div class="nav-content">
+                    <div class="nav-logo">
+                        <i class="fas fa-bolt logo-icon-sm"></i>
+                        <h1 class="nav-title">EV Charging CMS</h1>
+                    </div>
+                    <div class="nav-actions">
+                        <div class="notification-bell">
+                            <i class="fas fa-bell"></i>
+                            <span class="notification-badge">5</span>
+                        </div>
+                        <div class="user-profile">
+                            <img src="https://via.placeholder.com/40" alt="Division Avatar" class="avatar">
+                            <div>
+                                <p class="user-name" id="divisionUserName">North Division</p>
+                                <button id="divisionLogoutBtn" class="logout-btn">Logout</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div class="dashboard-container">
+            <!-- Sidebar -->
+            <aside class="sidebar">
+                <div class="sidebar-header">
+                    <p class="sidebar-title-sm">Division Panel</p>
+                    <p class="sidebar-title">Dashboard</p>
+                </div>
+                <nav class="sidebar-nav">
+                    <div class="sidebar-nav-group">
+                        <a href="#" class="sidebar-item active" data-section="divisionHome">
+                            <i class="fas fa-tachometer-alt"></i>
+                            <span>Dashboard</span>
+                        </a>
+                        
+                        <p class="sidebar-section-title">Complaints</p>
+                        
+                        <a href="#" class="sidebar-item" data-section="divisionComplaints">
+                            <i class="fas fa-exclamation-circle"></i>
+                            <span>Manage Complaints</span>
+                        </a>
+                        
+                        <a href="#" class="sidebar-item" data-section="assignedVendors">
+                            <i class="fas fa-users-cog"></i>
+                            <span>Assigned Vendors</span>
+                        </a>
+                        
+                        <p class="sidebar-section-title">Chargers</p>
+                        
+                        <a href="#" class="sidebar-item" data-section="divisionChargers">
+                            <i class="fas fa-charging-station"></i>
+                            <span>Manage Chargers</span>
+                        </a>
+                    </div>
+                </nav>
+            </aside>
+
+            <!-- Main Content -->
+            <main class="main-content">
+                <!-- Division Dashboard Home -->
+                <div id="divisionHomeSection" class="dashboard-section">
+                    <div class="section-header">
+                        <h2 class="section-title">Division Dashboard</h2>
+                        <p class="section-subtitle">Welcome back, <span id="divisionWelcomeName">North Division</span>. Here's your overview.</p>
+                    </div>
+
+                    <!-- Stats Cards -->
+                    <div class="stats-grid">
+                        <!-- Total Chargers -->
+                        <div class="stat-card">
+                            <div class="stat-card-content">
+                                <div>
+                                    <p class="stat-label">Total Chargers</p>
+                                    <p class="stat-value" id="divTotalChargers">0</p>
+                                </div>
+                                <div class="stat-icon blue">
+                                    <i class="fas fa-bolt"></i>
+                                </div>
+                            </div>
+                            <div class="stat-footer">
+                                <span class="stat-trend positive">
+                                    <i class="fas fa-arrow-up"></i>
+                                    <span id="divChargersChange">0</span>
+                                </span>
+                                <span class="stat-period">from last month</span>
+                            </div>
+                        </div>
+
+                        <!-- Active Chargers -->
+                        <div class="stat-card">
+                            <div class="stat-card-content">
+                                <div>
+                                    <p class="stat-label">Active Chargers</p>
+                                    <p class="stat-value" id="divActiveChargers">0</p>
+                                </div>
+                                <div class="stat-icon green">
+                                    <i class="fas fa-power-off"></i>
+                                </div>
+                            </div>
+                            <div class="stat-footer">
+                                <span class="stat-trend" id="activeChargersTrend">
+                                    <i class="fas fa-arrow-down"></i>
+                                    0
+                                </span>
+                                <span class="stat-period">from yesterday</span>
+                            </div>
+                        </div>
+
+                        <!-- Open Complaints -->
+                        <div class="stat-card">
+                            <div class="stat-card-content">
+                                <div>
+                                    <p class="stat-label">Open Complaints</p>
+                                    <p class="stat-value" id="divOpenComplaints">0</p>
+                                </div>
+                                <div class="stat-icon yellow">
+                                    <i class="fas fa-exclamation-circle"></i>
+                                </div>
+                            </div>
+                            <div class="stat-footer">
+                                <span class="stat-trend" id="openComplaintsTrend">
+                                    <i class="fas fa-arrow-up"></i>
+                                    0
+                                </span>
+                                <span class="stat-period">from last week</span>
+                            </div>
+                        </div>
+
+                        <!-- Resolution Rate -->
+                        <div class="stat-card">
+                            <div class="stat-card-content">
+                                <div>
+                                    <p class="stat-label">Resolution Rate</p>
+                                    <p class="stat-value" id="divResolutionRate">0%</p>
+                                </div>
+                                <div class="stat-icon purple">
+                                    <i class="fas fa-check-circle"></i>
+                                </div>
+                            </div>
+                            <div class="stat-footer">
+                                <span class="stat-trend positive" id="resolutionRateTrend">
+                                    <i class="fas fa-arrow-up"></i>
+                                    0%
+                                </span>
+                                <span class="stat-period">from last month</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Recent Division Complaints -->
+                    <div class="data-table-container">
+                        <div class="data-table-header">
+                            <h3 class="data-table-title">Recent Complaints</h3>
+                        </div>
+                        <div class="data-table-responsive">
+                            <table class="data-table" id="divisionComplaintsTable">
+                                <thead>
+                                    <tr>
+                                        <th>Tracking ID</th>
+                                        <th>Charger ID</th>
+                                        <th>Location</th>
+                                        <th>Type</th>
+                                        <th>Reported On</th>
+                                        <th>Status</th>
+                                        <th>Assigned To</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Division complaints will be populated by JavaScript -->
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="data-table-footer">
+                            <a href="#" class="view-all-link" id="viewAllDivisionComplaints">View all complaints →</a>
+                        </div>
+                    </div>
+
+                    <!-- Charger Status Overview -->
+                    <div class="chart-container-half">
+                        <div class="data-table-header">
+                            <h3 class="data-table-title">Charger Status Overview</h3>
+                        </div>
+                        <div class="chart-wrapper">
+                            <canvas id="chargerStatusChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Division Complaints Management Section (initially hidden) -->
+                <div id="divisionComplaintsSection" class="dashboard-section hidden">
+                    <div class="section-header">
+                        <h2 class="section-title">Manage Division Complaints</h2>
+                        <p class="section-subtitle">View and resolve complaints for your division's chargers.</p>
+                    </div>
+
+                    <!-- Division Complaints Filters -->
+                    <div class="filter-container">
+                        <div class="filter-group">
+                            <label for="divComplaintStatusFilter">Status:</label>
+                            <select id="divComplaintStatusFilter">
+                                <option value="all">All</option>
+                                <option value="open">Open</option>
+                                <option value="in-progress">In Progress</option>
+                                <option value="resolved">Resolved</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label for="divComplaintTypeFilter">Type:</label>
+                            <select id="divComplaintTypeFilter">
+                                <option value="all">All</option>
+                                <option value="charger">Charger Issues</option>
+                                <option value="billing">Billing Issues</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label for="divComplaintSearch">Search:</label>
+                            <input type="text" id="divComplaintSearch" placeholder="Search complaints">
+                        </div>
+                        <div class="filter-group date-filter">
+                            <label for="divDateFrom">From:</label>
+                            <input type="date" id="divDateFrom">
+                        </div>
+                        <div class="filter-group date-filter">
+                            <label for="divDateTo">To:</label>
+                            <input type="date" id="divDateTo">
+                        </div>
+                        <button id="applyDivFilters" class="btn btn-sm btn-secondary">Apply Filters</button>
+                        <button id="resetDivFilters" class="btn btn-sm btn-outline">Reset</button>
+                        
+                        
+                    </div>
+
+                    <!-- Division Complaints Table -->
+                    <div class="data-table-container">
+                        <div class="data-table-responsive">
+                            <table class="data-table" id="divComplaintsTable">
+                                <thead>
+                                    <tr>
+                                        <th>Tracking ID</th>
+                                        <th>Charger ID</th>
+                                        <th>Location</th>
+                                        <th>Customer</th>
+                                        <th>Type</th>
+                                        <th>Status</th>
+                                        <th>Assigned To</th>
+                                        <th>Date</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Division complaint data will be populated by JavaScript -->
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="pagination">
+                            <button class="pagination-btn" id="prevDivComplaintPage" disabled>
+                                <i class="fas fa-chevron-left"></i> Previous
+                            </button>
+                            <div class="pagination-info">Page <span id="currentDivComplaintPage">1</span> of <span id="totalDivComplaintPages">1</span></div>
+                            <button class="pagination-btn" id="nextDivComplaintPage">
+                                Next <i class="fas fa-chevron-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Division Charger Management Section (initially hidden) -->
+                <div id="divisionChargersSection" class="dashboard-section hidden">
+                    <div class="section-header-flex">
+                        <div>
+                            <h2 class="section-title">Manage Division Chargers</h2>
+                            <p class="section-subtitle">Commission and monitor chargers in your division.</p>
+                        </div>
+                        <div class="button-group">
+                            <button id="addDivisionChargerBtn" class="btn btn-primary">
+                                <i class="fas fa-plus"></i>
+                                Commission New Charger
+                            </button>
+                            <button id="bulkUploadChargersBtn" class="btn btn-secondary">
+                                <i class="fas fa-file-upload"></i>
+                                Bulk Upload
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Division Chargers List -->
+                    <div class="data-table-container">
+                        <div class="data-table-header">
+                            <h3 class="data-table-title">Division Chargers</h3>
+                        </div>
+                        <div class="filter-container">
+                            <div class="filter-group">
+                                <label for="divChargerStatusFilter">Status:</label>
+                                <select id="divChargerStatusFilter">
+                                    <option value="all">All</option>
+                                    <option value="active">Active</option>
+                                    <option value="inactive">Inactive</option>
+                                    <option value="maintenance">Under Maintenance</option>
+                                </select>
+                            </div>
+                            <div class="filter-group">
+                                <label for="divChargerTypeFilter">Type:</label>
+                                <select id="divChargerTypeFilter">
+                                    <option value="all">All</option>
+                                    <option value="ac">AC Chargers</option>
+                                    <option value="dc">DC Chargers</option>
+                                </select>
+                            </div>
+                            <div class="filter-group">
+                                <label for="divChargerSearch">Search:</label>
+                                <input type="text" id="divChargerSearch" placeholder="CPID or Location">
+                            </div>
+                            <button id="applyDivChargerFilters" class="btn btn-sm btn-secondary">Apply Filters</button>
+                            <button id="resetDivChargerFilters" class="btn btn-sm btn-outline">Reset</button>
+                        </div>
+                        <div class="data-table-responsive">
+                            <table class="data-table" id="divisionChargersTable">
+                                <thead>
+                                    <tr>
+                                        <th>Charge Point ID</th>
+                                        <th>Serial Number</th>
+                                        <th>Location Name</th>
+                                        <th>Make & Model</th>
+                                        <th>Type</th>
+                                        <th>Status</th>
+                                        <th>Open Complaints</th>
+                                        <th>Commission Date</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Division charger data will be populated by JavaScript -->
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="pagination">
+                            <button class="pagination-btn" id="prevDivChargerPage" disabled>
+                                <i class="fas fa-chevron-left"></i> Previous
+                            </button>
+                            <div class="pagination-info">Page <span id="currentDivChargerPage">1</span> of <span id="totalDivChargerPages">1</span></div>
+                            <button class="pagination-btn" id="nextDivChargerPage">
+                                Next <i class="fas fa-chevron-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Assigned Vendors Section (initially hidden) -->
+                <div id="assignedVendorsSection" class="dashboard-section hidden">
+                    <div class="section-header">
+                        <h2 class="section-title">Assigned Vendors</h2>
+                        <p class="section-subtitle">Manage vendors assigned to your division for charger maintenance.</p>
+                    </div>
+
+                    <!-- Vendors List -->
+                    <div class="data-table-container">
+                        <div class="data-table-header">
+                            <h3 class="data-table-title">Vendors Available for Your Division</h3>
+                        </div>
+                        <div class="data-table-responsive">
+                            <table class="data-table" id="divVendorsTable">
+                                <thead>
+                                    <tr>
+                                        <th>Vendor Name</th>
+                                        <th>Contact Person</th>
+                                        <th>Email</th>
+                                        <th>Phone</th>
+                                        <th>Open Tickets</th>
+                                        <th>Average Resolution Time</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Division vendors will be populated by JavaScript -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Complaint Details Modal -->
+    <div id="complaintDetailsModal" class="modal">
+        <div class="modal-content modal-lg">
+            <div class="modal-header">
+                <h2 class="modal-title">Complaint Details</h2>
+                <button class="modal-close" id="closeComplaintModal">×</button>
+            </div>
+            <div class="modal-body" id="complaintDetailsContent">
+                <!-- Complaint details will be populated by JavaScript -->
+            </div>
+            <div class="modal-footer" id="complaintActionButtons">
+                <!-- Action buttons will be populated by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Assign to Vendor Modal -->
+    <div id="assignToVendorModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Assign Complaint to Vendor</h2>
+                <button class="modal-close" id="closeAssignVendorModal">×</button>
+            </div>
+            <div class="modal-body">
+                <form id="assignToVendorForm">
+                    <div class="form-group">
+                        <label for="vendorSelect">Select Vendor</label>
+                        <select id="vendorSelect" name="vendorSelect" required>
+                            <option value="">Select Vendor</option>
+                            <!-- Vendor options will be populated by JavaScript -->
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="vendorAssignmentNote">Instructions for Vendor</label>
+                        <textarea id="vendorAssignmentNote" name="vendorAssignmentNote" rows="3" placeholder="Add any instructions or details for the vendor..."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="expectedResolutionDate">Expected Resolution Date</label>
+                        <input type="date" id="expectedResolutionDate" name="expectedResolutionDate">
+                    </div>
+                    <div class="form-group">
+                        <div class="checkbox-label">
+                            <input type="checkbox" id="updateToInProgress" name="updateToInProgress" checked>
+                            <label for="updateToInProgress">Update status to "In Progress"</label>
+                        </div>
+                    </div>
+                    <input type="hidden" id="vendorComplaintTrackingId" value="">
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" id="cancelAssignVendorBtn">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Assign</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Update Status Modal -->
+    <div id="updateStatusModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Update Complaint Status</h2>
+                <button class="modal-close" id="closeStatusModal">×</button>
+            </div>
+            <div class="modal-body">
+                <div id="currentStatusInfo" class="mb-4">
+                    <!-- Current status info will be populated by JavaScript -->
+                </div>
+                
+                <form id="updateStatusForm">
+                    <div class="form-group">
+                        <label for="newStatus">New Status</label>
+                        <select id="newStatus" name="newStatus" required>
+                            <option value="">Select New Status</option>
+                            <!-- Status options will be populated by JavaScript -->
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="statusNote">Note / Resolution Details</label>
+                        <textarea id="statusNote" name="statusNote" rows="3" placeholder="Add notes about this status change..."></textarea>
+                    </div>
+                    <input type="hidden" id="statusComplaintId" value="">
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" id="cancelStatusBtn">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Update Status</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification Container -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+    <script src="js/division.js"></script>
+</body>
+</html>
